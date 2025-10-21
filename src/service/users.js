@@ -1,19 +1,23 @@
+import ModelUser from '../model/users.js'
+
 class ServiceUser{
 
-    FindAll() {
-        return ['oi' , 'xau']
+        FindAll() {
+        return ModelUser.FindAll()
     }
-    FindOne() {
-        return ['oi' , 'xau']
+        FindOne(index) {
+        // verificar se o index é valido
+        return ModelUser.FindOne(index)
     }
-        Create() {
-        return ['oi' , 'xau']
+        Create(nome) {
+        return ModelUser.Create(nome)
     }
-        Update() {
-        return ['oi' , 'xau']
+        Update(index, nome) {
+        // verificar se o index e nome é valido
+        return ModelUser.Update(index, nome)
     }
-        Delete() {
-        return ['oi' , 'xau']
+        Delete(index) {
+        return ModelUser.Delete(index)
     }
 }
 
