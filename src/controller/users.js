@@ -1,67 +1,67 @@
-import ServiceUser from '../service/users.js'
+import ServiceUser from "../service/users.js"
 
-class ControllerUser {
+class ControllerUser{
 
-  FindAll(_, res) {
+FindAll (_, res){
     try {
-      const nomes = ServiceUser.FindAll()
-      res.status(200).send({ nomes })
+
+        const nomes = ServiceUser.FindAll()
+        res.status(200).send({ nomes })
 
     } catch (error) {
-      res.status(500).send({ error: error.message })
+        res.status(500).send({error: error.message})
     }
-    //chamar o serviço
-  }
+    
+}
 
-
-  async FindOne(req, res) {
+async FindOne (req,res){
     try {
-      const id = req.params.id
-      const user = await ServiceUser.FindOne(id)
-      res.status(200).send({ user })
+        const id = req.params.id
+
+        const user = await ServiceUser.FindOne(id)
+        res.status(200).send({ user })
+
     } catch (error) {
-      res.status(500).send({ error: error.message })
+        res.status(500).send({error: error.message})
     }
-    //chamar o serviço
-  }
+    
+}
 
-
-  async Create(req, res) {
+async Create (req,res){
     try {
-      const { nome, email, senha, ativo } = req.body
-      await ServiceUser.Create(nome, email, senha, ativo)
-      res.status(201).send
+
+        const { nome, email, senha, ativo } = req.body
+        await ServiceUser.Create(nome, email, senha, ativo)
+        res.status(201).send("Usuario criado com sucesso")
+
     } catch (error) {
-      res.status(500).send({ error: error.message })
+        res.status(500).send({error: error.message})
     }
-    //chamar o serviço
-  }
-
-
-  Update(req, res) {
+    
+}
+async Update (req,res){
     try {
-      const id = req.params.id
-      const nome = req.body.nome
-      ServiceUser.Update(id, nome)
-      res.status(200).send()
+        const id = req.params.id
+        const {nome, email, senha, ativo} = req.body
+        ServiceUser.Update(id, nome, email, senha, ativo)
+        res.status(200).send()
+
     } catch (error) {
-      res.status(500).send({ error: error.message })
+        res.status(500).send({error: error.message})
     }
-    //chamar o serviço
-  }
-
-
-  Delete(req, res) {
+    
+}
+async Delete (req,res){
     try {
-      const id = req.params.id
-      ServiceUser.Delete(id)
-      res.status(204).send()
-    } catch (error) {
-      res.status(500).send({ error: error.message })
-    }
-    //chamar o serviço
-  }
+        const id = req.params.id
+        await ServiceUser.Delete(id)
+        res.status(204).send("usuario deletado com sucesso")
 
+    } catch (error) {
+        res.status(500).send({error: error.message})
+    }
+    
+}
 
 }
 

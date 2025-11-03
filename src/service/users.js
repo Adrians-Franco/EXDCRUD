@@ -1,38 +1,68 @@
-import User from '../model/users.js'
+import User from "../model/users.js"
 
 class ServiceUser {
 
-    FindAll() {
+    FindAll(){
         return User.FindAll()
     }
-    async FindOne(id) {
-        if (!id) {
-            throw new Error("Favor informar o ID")
+
+    async FindOne(id){
+        if(!id){
+            throw new Error("favor informar o ID")
         }
+
         const user = await User.findByPk(id)
 
-        if (!user) {
-            throw new Error("Usuario não encontrado")
+        if(!user){
+            throw new Error(`usuario ${id} não enontrado`)
         }
-        // verificar se o id é valido
+
         return user
     }
-    async Create(nome, email, senha, ativo) {
-        if (!nome || !email || !senha) {
-            throw new Error("favor preencher todos os campos")
-
+    
+    async Create(nome, email, senha, ativo){
+        if (!nome || !email || !senha ) {
+            throw new Error("Favor preencher todos os campos")
         }
+
         await User.create({
             nome, email, senha, ativo
         })
     }
-    Update(id, nome) {
-        // verificar se o id e nome é valido
-        return User.Update(id, nome)
+
+    async Update(id, nome, email, senha, ativos){
+        if(!id | !nome | !email | !senha){
+            throw new Error("Favor preencher todos campos")
+        }
+
+        const user = await User.findByPk(id)
+        
+        if(!user){
+            throw new Error(`usuário ${id} não foi encontrado`)
+        }
+
+        user.nome = nome
+        user.email = email
+        user.senha = senha
+        user.ativo = ativos
+        
+        await user.save()
     }
-    Delete(id) {
-        return User.Delete(id)
+
+    async Delete(id){
+        if(!id){
+            throw new Error("Informar ID valido")
+        }
+
+        const user = await User.findByPk(id)
+        
+        if(!user){
+            throw new Error(`usuário ${id} não foi encontrado`)
+        }
+
+        await user.destroy()
     }
+
 }
 
 export default new ServiceUser()
