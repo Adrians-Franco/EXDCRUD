@@ -5,8 +5,8 @@ class ControllerUser {
     FindAll(_, res) {
         try {
 
-            const nomes = ServiceUser.FindAll()
-            res.status(200).send({ nomes })
+            const nome = ServiceUser.FindAll()
+            res.status(200).send({ nome })
 
         } catch (error) {
             res.status(500).send({ error: error.message })
@@ -16,6 +16,7 @@ class ControllerUser {
 
     async FindOne(req, res) {
         try {
+            console.log(req.headers.user)
             const id = req.params.id
 
             const user = await ServiceUser.FindOne(id)
@@ -31,7 +32,7 @@ class ControllerUser {
         try {
 
             const { nome, email, senha, ativo } = req.body
-            await ServiceUser.Create(nome, email, senha, ativo)
+            await ServiceUser.Create(nome, email, senha, ativo, 1)
             res.status(201).send("Usuario criado com sucesso")
 
         } catch (error) {
@@ -70,7 +71,7 @@ class ControllerUser {
             const token = await ServiceUser.Login(email, senha)
             res.status(200).send({ token })
         } catch (error) {
-            res.status(200).send({ error: error.message })
+            res.status(500).send({ error: error.message })
 
         }
 

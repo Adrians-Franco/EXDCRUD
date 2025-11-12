@@ -1,7 +1,7 @@
- import database from "../config/database.js"
+import database from "../config/database.js"
 
-class User{
-    constructor(){
+class User {
+    constructor() {
         this.model = database.db.define('users', {
             id: {
                 type: database.db.Sequelize.INTEGER,
@@ -19,8 +19,14 @@ class User{
             },
             ativo: {
                 type: database.db.Sequelize.BOOLEAN
+            },
+            permissao: {
+                // recomendado usar ENUN, ESTUDAR POR FORA
+                type: database.db.Sequelize.INTEGER
+
+
             }
-            }
+        }
         )
     }
 }
